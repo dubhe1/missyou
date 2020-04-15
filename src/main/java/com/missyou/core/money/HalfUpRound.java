@@ -7,7 +7,6 @@ public class HalfUpRound implements IMoneyDiscount {
     @Override
     public BigDecimal discount(BigDecimal original, BigDecimal discount) {
         BigDecimal actualMoney = original.multiply(discount);
-        BigDecimal finalMoney = actualMoney.setScale(2, RoundingMode.HALF_UP);
-        return finalMoney;
+        return actualMoney.setScale(2, RoundingMode.HALF_UP);
     }
 }

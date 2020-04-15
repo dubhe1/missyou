@@ -15,11 +15,9 @@ public enum OrderStatus {
     DEAL_OUT_OF(22, "已处理缺货但支付的情况");
 
     private final int value;
-    private final String text;
 
     OrderStatus(int value, String text) {
         this.value = value;
-        this.text = text;
     }
 
     public int value() {

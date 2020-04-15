@@ -21,8 +21,7 @@ public class LocalUser {
 
     public static User getUser() {
         Map<String, Object> map = LocalUser.threadLocal.get();
-        User user = (User) map.get("user");
-        return user;
+        return (User) map.get("user");
     }
 
     public static Integer getScope() {

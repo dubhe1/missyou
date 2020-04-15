@@ -1,19 +1,10 @@
 package com.missyou.service;
 
 import com.missyou.model.Activity;
-import com.missyou.repository.ActivityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class ActivityService {
+public interface ActivityService {
+    public Activity getByName(String name);
 
-    @Autowired
-    private ActivityRepository activityRepository;
-
-    public Activity getByName(String name) {
-        return activityRepository.findByName(name);
-    }
 
 //    public List<Activity> getByCategoryId(Long categoryId){
 //        Date date = new Date();

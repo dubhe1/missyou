@@ -27,7 +27,7 @@ public class CategoryController {
     private GridCategoryService gridCategoryService;
 
     @GetMapping("/all")
-    public CategoriesAllVO getAll(){
+    public CategoriesAllVO getAll() {
         Map<Integer, List<Category>> categories = categoryService.getAll();
         return new CategoriesAllVO(categories);
     }

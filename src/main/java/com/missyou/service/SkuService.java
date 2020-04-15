@@ -7,13 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class SkuService {
+public interface SkuService {
 
-    @Autowired
-    private SkuRepository skuRepository;
 
-    public List<Sku> getSkuListByIds(List<Long> ids) {
-        return this.skuRepository.findAllByIdIn(ids);
-    }
+    public List<Sku> getSkuListByIds(List<Long> ids);
 }

@@ -23,8 +23,7 @@ public class ActivityController {
         if (activity == null) {
             throw new NotFoundException(40001);
         }
-        ActivityPureVO vo = new ActivityPureVO(activity);
-        return vo;
+        return new ActivityPureVO(activity);
     }
 
     @GetMapping("/name/{name}/with_coupon")
