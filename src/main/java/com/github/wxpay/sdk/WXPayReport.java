@@ -31,20 +31,20 @@ public class WXPayReport {
          */
 
         // 基本信息
-        private String version = "v1";
-        private String sdk = WXPayConstants.WXPAYSDK_VERSION;
-        private String uuid;  // 交易的标识
-        private long timestamp;   // 上报时的时间戳，单位秒
-        private long elapsedTimeMillis; // 耗时，单位 毫秒
+        private final String version = "v1";
+        private final String sdk = WXPayConstants.WXPAYSDK_VERSION;
+        private final String uuid;  // 交易的标识
+        private final long timestamp;   // 上报时的时间戳，单位秒
+        private final long elapsedTimeMillis; // 耗时，单位 毫秒
 
         // 针对主域名
-        private String firstDomain;  // 第1次请求的域名
-        private boolean primaryDomain; //是否主域名
-        private int firstConnectTimeoutMillis;  // 第1次请求设置的连接超时时间，单位 毫秒
-        private int firstReadTimeoutMillis;  // 第1次请求设置的读写超时时间，单位 毫秒
-        private int firstHasDnsError;  // 第1次请求是否出现dns问题
-        private int firstHasConnectTimeout; // 第1次请求是否出现连接超时
-        private int firstHasReadTimeout; // 第1次请求是否出现连接超时
+        private final String firstDomain;  // 第1次请求的域名
+        private final boolean primaryDomain; //是否主域名
+        private final int firstConnectTimeoutMillis;  // 第1次请求设置的连接超时时间，单位 毫秒
+        private final int firstReadTimeoutMillis;  // 第1次请求设置的读写超时时间，单位 毫秒
+        private final int firstHasDnsError;  // 第1次请求是否出现dns问题
+        private final int firstHasConnectTimeout; // 第1次请求是否出现连接超时
+        private final int firstHasReadTimeout; // 第1次请求是否出现连接超时
 
         public ReportInfo(String uuid, long timestamp, long elapsedTimeMillis, String firstDomain, boolean primaryDomain, int firstConnectTimeoutMillis, int firstReadTimeoutMillis, boolean firstHasDnsError, boolean firstHasConnectTimeout, boolean firstHasReadTimeout) {
             this.uuid = uuid;
@@ -114,8 +114,8 @@ public class WXPayReport {
     private static final int DEFAULT_READ_TIMEOUT_MS = 8*1000;
 
     private LinkedBlockingQueue<String> reportMsgQueue = null;
-    private WXPayConfig config;
-    private ExecutorService executorService;
+    private final WXPayConfig config;
+    private final ExecutorService executorService;
 
     private volatile static WXPayReport INSTANCE;
 
@@ -160,7 +160,7 @@ public class WXPayReport {
                                     }
                                 }
                                 // 上报
-                                WXPayReport.httpRequest(sb.toString(), DEFAULT_CONNECT_TIMEOUT_MS, DEFAULT_READ_TIMEOUT_MS);
+                                WXPayReport.httpRequest(sb.toString());
                             }
                             catch (Exception ex) {
                                 WXPayUtil.getLogger().warn("report fail. reason: {}", ex.getMessage());
@@ -207,7 +207,7 @@ public class WXPayReport {
 
     @Deprecated
     private void reportSync(final String data) throws Exception {
-        httpRequest(data, DEFAULT_CONNECT_TIMEOUT_MS, DEFAULT_READ_TIMEOUT_MS);
+        httpRequest(data);
     }
 
     @Deprecated
@@ -215,7 +215,7 @@ public class WXPayReport {
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    httpRequest(data, DEFAULT_CONNECT_TIMEOUT_MS, DEFAULT_READ_TIMEOUT_MS);
+                    httpRequest(data);
                 }
                 catch (Exception ex) {
                     WXPayUtil.getLogger().warn("report fail. reason: {}", ex.getMessage());
@@ -227,12 +227,10 @@ public class WXPayReport {
     /**
      * http 请求
      * @param data
-     * @param connectTimeoutMs
-     * @param readTimeoutMs
      * @return
      * @throws Exception
      */
-    private static String httpRequest(String data, int connectTimeoutMs, int readTimeoutMs) throws Exception{
+    private static String httpRequest(String data) throws Exception{
         BasicHttpClientConnectionManager connManager;
         connManager = new BasicHttpClientConnectionManager(
                 RegistryBuilder.<ConnectionSocketFactory>create()
@@ -249,7 +247,7 @@ public class WXPayReport {
 
         HttpPost httpPost = new HttpPost(REPORT_URL);
 
-        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(readTimeoutMs).setConnectTimeout(connectTimeoutMs).build();
+        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(WXPayReport.DEFAULT_READ_TIMEOUT_MS).setConnectTimeout(WXPayReport.DEFAULT_CONNECT_TIMEOUT_MS).build();
         httpPost.setConfig(requestConfig);
 
         StringEntity postEntity = new StringEntity(data, "UTF-8");
