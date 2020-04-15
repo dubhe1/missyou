@@ -1,11 +1,3 @@
-/**
- * @作者 7七月
- * @微信公号 林间有风
- * @开源项目 $ http://7yue.pro
- * @免费专栏 $ http://course.7yue.pro
- * @我的课程 $ http://imooc.com/t/4294850
- * @创建时间 2020-03-02 05:34
- */
 package com.missyou.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,8 +29,7 @@ public class MapAndJson implements AttributeConverter<Map<String, Object>, Strin
     @SuppressWarnings("unchecked")
     public Map<String, Object> convertToEntityAttribute(String s) {
         try {
-            Map<String, Object> t = mapper.readValue(s, HashMap.class);
-            return t;
+            return mapper.readValue(s, HashMap.class);
         } catch (Exception e) {
             e.printStackTrace();
             throw new ServerErrorException(9999);

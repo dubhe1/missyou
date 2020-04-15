@@ -42,7 +42,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
         if (!bearerToken.startsWith("Bearer")) {
             throw new UnAuthenticatedException(10004);
         }
-        String tokens[] = bearerToken.split(" ");
+        String[] tokens = bearerToken.split(" ");
         if (!(tokens.length == 2)) {
             throw new UnAuthenticatedException(10004);
         }
@@ -52,13 +52,13 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
                 .orElseThrow(() -> new UnAuthenticatedException(10004));
 
         boolean valid = this.hasPermission(scopeLevel.get(), map);
-        if(valid){
+        if (valid) {
             this.setToThreadLocal(map);
         }
         return valid;
     }
 
-    private void setToThreadLocal(Map<String,Claim> map) {
+    private void setToThreadLocal(Map<String, Claim> map) {
         Long uid = map.get("uid").asLong();
         Integer scope = map.get("scope").asInt();
         User user = this.userService.getUserById(uid);
@@ -66,7 +66,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
     }
 
     private boolean hasPermission(ScopeLevel scopeLevel, Map<String, Claim> map) {
-        Integer level = scopeLevel.value();
+        int level = scopeLevel.value();
         Integer scope = map.get("scope").asInt();
         if (level > scope) {
             throw new ForbiddenException(10005);

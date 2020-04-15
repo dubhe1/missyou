@@ -686,4 +686,4 @@ public class WXPay {
     }
 
 
-} // end class
+}

@@ -1,11 +1,3 @@
-/**
- * @作者 7七月
- * @微信公号 林间有风
- * @开源项目 $ http://talelin.com
- * @免费专栏 $ http://course.talelin.com
- * @我的课程 $ http://imooc.com/t/4294850
- * @创建时间 2020-03-24 14:35
- */
 package com.missyou.logic;
 
 import com.missyou.bo.SkuOrderBO;
@@ -22,16 +14,16 @@ import java.util.List;
 
 public class OrderChecker {
 
-    private OrderDTO orderDTO;
-    private List<Sku> serverSkuList;
-    private CouponChecker couponChecker;
-    private Integer maxSkuLimit;
+    private final OrderDTO orderDTO;
+    private final List<Sku> serverSkuList;
+    private final CouponChecker couponChecker;
+    private final Integer maxSkuLimit;
 
     @Getter
-    private List<OrderSku> orderSkuList = new ArrayList<>();
+    private final List<OrderSku> orderSkuList = new ArrayList<>();
 
     public OrderChecker(OrderDTO orderDTO, List<Sku> serverSkuList,
-                        CouponChecker couponChecker, Integer maxSkuLimit){
+                        CouponChecker couponChecker, Integer maxSkuLimit) {
         this.orderDTO = orderDTO;
         this.serverSkuList = serverSkuList;
         this.couponChecker = couponChecker;
@@ -39,7 +31,7 @@ public class OrderChecker {
     }
 
     public String getLeaderImg() {
-        return  this.serverSkuList.get(0).getImg();
+        return this.serverSkuList.get(0).getImg();
     }
 
     public String getLeaderTitle() {
@@ -88,7 +80,7 @@ public class OrderChecker {
         }
     }
 
-    private BigDecimal calculateSkuOrderPrice(Sku sku, SkuInfoDTO skuInfoDTO){
+    private BigDecimal calculateSkuOrderPrice(Sku sku, SkuInfoDTO skuInfoDTO) {
         if (skuInfoDTO.getCount() <= 0) {
             throw new ParameterException(50007);
         }

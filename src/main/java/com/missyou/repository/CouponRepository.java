@@ -1,11 +1,3 @@
-/**
- * @作者 7七月
- * @微信公号 林间有风
- * @开源项目 $ http://7yue.pro
- * @免费专栏 $ http://course.7yue.pro
- * @我的课程 $ http://imooc.com/t/4294850
- * @创建时间 2019-08-05 05:28
- */
 package com.missyou.repository;
 
 import com.missyou.model.Coupon;
@@ -29,13 +21,11 @@ public interface CouponRepository extends JpaRepository<Coupon, Long>, JpaSpecif
     List<Coupon> findByCategory(Long cid, Date now);
 
 
-
     @Query("select c from Coupon c\n" +
             "join Activity a on c.activityId = a.id\n" +
             "where c.wholeStore = :isWholeStore\n" +
             "and a.startTime < :now\n" +
-            "and a.endTime > :now\n" )
-
+            "and a.endTime > :now\n")
     List<Coupon> findByWholeStore(Boolean isWholeStore, Date now);
 
 
@@ -50,7 +40,6 @@ public interface CouponRepository extends JpaRepository<Coupon, Long>, JpaSpecif
             "and c.endTime > :now\n" +
             "and uc.orderId is null")
     List<Coupon> findMyAvailable(Long uid, Date now);
-
 
 
     @Query("select c From Coupon c\n" +
@@ -76,17 +65,6 @@ public interface CouponRepository extends JpaRepository<Coupon, Long>, JpaSpecif
             "and uc.status <> 2\n" +
             "and c.endTime < :now")
     List<Coupon> findMyExpired(Long uid, Date now);
-
-
-
-
-
-
-
-
-
-
-
 
 
     Optional<Coupon> findByIdAndCreateTimeLessThanAndEndTimeGreaterThan(Long id, Date now1, Date now2);

@@ -4,17 +4,23 @@ import java.util.stream.Stream;
 
 public enum CouponType {
     FULL_MINUS(1, "满减券"),
-    FULL_OFF(2,"满减折扣券"),
+    FULL_OFF(2, "满减折扣券"),
     NO_THRESHOLD_MINUS(3, "无门槛减除券");
 
-    private int value;
+    private final int value;
+    private final String description;
 
     CouponType(int value, String description) {
         this.value = value;
+        this.description = description;
     }
 
     public int value() {
         return this.value;
+    }
+
+    public String description() {
+        return this.description;
     }
 
     public static CouponType toType(int value) {

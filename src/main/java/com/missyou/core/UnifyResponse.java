@@ -3,7 +3,7 @@ package com.missyou.core;
 import com.missyou.exception.CreateSuccess;
 
 public class UnifyResponse {
-    private int code;
+    private final int code;
 
     public int getCode() {
         return code;
@@ -17,10 +17,10 @@ public class UnifyResponse {
         return request;
     }
 
-    private String message;
-    private String request;
+    private final String message;
+    private final String request;
 
-    public UnifyResponse(int code, String message, String request){
+    public UnifyResponse(int code, String message, String request) {
         this.code = code;
         this.message = message;
         this.request = request;

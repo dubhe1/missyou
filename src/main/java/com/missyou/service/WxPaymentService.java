@@ -1,11 +1,3 @@
-/**
- * @作者 7七月
- * @微信公号 林间有风
- * @开源项目 $ http://talelin.com
- * @免费专栏 $ http://course.talelin.com
- * @我的课程 $ http://imooc.com/t/4294850
- * @创建时间 2020-03-31 18:38
- */
 package com.missyou.service;
 
 import com.github.wxpay.sdk.*;
@@ -42,7 +34,7 @@ public class WxPaymentService {
     @Value("${missyou.order.pay-callback-path}")
     private String payCallbackPath;
 
-    private static LWxPayConfig lWxPayConfig = new LWxPayConfig();
+    private static final LWxPayConfig lWxPayConfig = new LWxPayConfig();
 
     public Map<String, String> preOrder(Long oid) {
         Long uid = LocalUser.getUser().getId();
@@ -63,8 +55,6 @@ public class WxPaymentService {
         if (this.unifiedOrderSuccess(wxOrder)) {
             this.orderService.updateOrderPrepayId(order.getId(), wxOrder.get("prepay_id"));
         }
-        // prepay_id
-        // wx.requestPayment
         return this.makePaySignature(wxOrder);
     }
 

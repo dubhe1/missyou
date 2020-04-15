@@ -1,11 +1,3 @@
-/**
- * @作者 7七月
- * @微信公号 林间有风
- * @开源项目 $ http://talelin.com
- * @免费专栏 $ http://course.talelin.com
- * @我的课程 $ http://imooc.com/t/4294850
- * @创建时间 2020-04-01 15:00
- */
 package com.missyou.util;
 
 
@@ -50,11 +42,11 @@ public class HttpRequestProxy {
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
                     }
+                    assert inet != null;
                     ipAddress = inet.getHostAddress();
                 }
             }
             if (ipAddress != null && ipAddress.length() > 15) { // "***.***.***.***".length()
-                // = 15
                 if (ipAddress.indexOf(",") > 0) {
                     ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
                 }

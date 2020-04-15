@@ -25,24 +25,22 @@ public class GlobalExceptionAdvice {
     @Autowired
     private ExceptionCodeConfiguration codeConfiguration;
 
-    @ExceptionHandler(value=Exception.class)
+    @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    @ResponseStatus(code= HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public UnifyResponse handleException(HttpServletRequest req, Exception e) {
         String requestUrl = req.getRequestURI();
         String method = req.getMethod();
         System.out.println(e);
-        UnifyResponse message = new UnifyResponse(9999, "服务器异常", method + " "+ requestUrl);
-        return message;
+        return new UnifyResponse(9999, "服务器异常", method + " " + requestUrl);
     }
 
     @ExceptionHandler(HttpException.class)
-    public ResponseEntity<UnifyResponse> handleHttpException(HttpServletRequest req, HttpException e){
+    public ResponseEntity<UnifyResponse> handleHttpException(HttpServletRequest req, HttpException e) {
         String requestUrl = req.getRequestURI();
         String method = req.getMethod();
 
-//        ResponseEntity
-        UnifyResponse message = new UnifyResponse(e.getCode(),codeConfiguration.getMessage(e.getCode()), method + " " + requestUrl);
+        UnifyResponse message = new UnifyResponse(e.getCode(), codeConfiguration.getMessage(e.getCode()), method + " " + requestUrl);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         HttpStatus httpStatus = HttpStatus.resolve(e.getHttpStatusCode());
@@ -61,13 +59,13 @@ public class GlobalExceptionAdvice {
         List<ObjectError> errors = e.getBindingResult().getAllErrors();
         String message = this.formatAllErrorMessages(errors);
 
-        return new UnifyResponse(10001, message,method + " " + requestUrl);
+        return new UnifyResponse(10001, message, method + " " + requestUrl);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(code= HttpStatus.BAD_REQUEST)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public UnifyResponse handleConstraintException(HttpServletRequest req, ConstraintViolationException e){
+    public UnifyResponse handleConstraintException(HttpServletRequest req, ConstraintViolationException e) {
         String requestUrl = req.getRequestURI();
         String method = req.getMethod();
         String message = e.getMessage();

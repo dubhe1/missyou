@@ -1,11 +1,3 @@
-/**
- * @作者 7七月
- * @微信公号 林间有风
- * @开源项目 $ http://7yue.pro
- * @免费专栏 $ http://course.7yue.pro
- * @我的课程 $ http://imooc.com/t/4294850
- * @创建时间 2019-08-05 05:37
- */
 package com.missyou.service;
 
 import com.missyou.core.enumeration.CouponStatus;
@@ -61,7 +53,7 @@ public class CouponService {
         return this.couponRepository.findMyExpired(uid, now);
     }
 
-    public void collectOneCoupon(Long uid, Long couponId){
+    public void collectOneCoupon(Long uid, Long couponId) {
         this.couponRepository
                 .findById(couponId)
                 .orElseThrow(() -> new NotFoundException(40003));
@@ -72,13 +64,15 @@ public class CouponService {
 
         Date now = new Date();
         Boolean isIn = CommonUtil.isInTimeLine(now, activity.getStartTime(), activity.getEndTime());
-        if(!isIn){
+        if (!isIn) {
             throw new ParameterException(40005);
         }
 
         this.userCouponRepository
                 .findFirstByUserIdAndCouponId(uid, couponId)
-                .ifPresent((uc)-> {throw new ParameterException(40006);});
+                .ifPresent((uc) -> {
+                    throw new ParameterException(40006);
+                });
 
         UserCoupon userCouponNew = UserCoupon.builder()
                 .userId(uid)
@@ -88,26 +82,6 @@ public class CouponService {
                 .build();
         userCouponRepository.save(userCouponNew);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //    public List<Coupon> getMyAvailableCoupons(Long uid) {

@@ -1,11 +1,3 @@
-/**
- * @作者 7七月
- * @微信公号 林间有风
- * @开源项目 $ http://talelin.com
- * @免费专栏 $ http://course.talelin.com
- * @我的课程 $ http://imooc.com/t/4294850
- * @创建时间 2020-03-23 15:39
- */
 package com.missyou.api.v1;
 
 import com.missyou.bo.PageCounter;
@@ -62,27 +54,27 @@ public class OrderController {
     @ScopeLevel
     @GetMapping("/status/unpaid")
     @SuppressWarnings("unchecked")
-    public PagingDozer getUnpaid(@RequestParam(defaultValue = "0")
-                                         Integer start,
-                                 @RequestParam(defaultValue = "10")
-                                         Integer count) {
+    public PagingDozer<Order, OrderSimplifyVO> getUnpaid(@RequestParam(defaultValue = "0")
+                                                                 Integer start,
+                                                         @RequestParam(defaultValue = "10")
+                                                                 Integer count) {
         PageCounter page = CommonUtil.convertToPageParameter(start, count);
         Page<Order> orderPage = this.orderService.getUnpaid(page.getPage(), page.getCount());
-        PagingDozer pagingDozer = new PagingDozer<>(orderPage, OrderSimplifyVO.class);
+        PagingDozer<Order, OrderSimplifyVO> pagingDozer = new PagingDozer<>(orderPage, OrderSimplifyVO.class);
         pagingDozer.getItems().forEach((o) -> ((OrderSimplifyVO) o).setPeriod(this.payTimeLimit));
         return pagingDozer;
     }
 
     @ScopeLevel
     @GetMapping("/by/status/{status}")
-    public PagingDozer getByStatus(@PathVariable int status,
-                                   @RequestParam(name = "start", defaultValue = "0")
-                                           Integer start,
-                                   @RequestParam(name = "count", defaultValue = "10")
-                                           Integer count) {
+    public PagingDozer<Order, OrderSimplifyVO> getByStatus(@PathVariable int status,
+                                                           @RequestParam(name = "start", defaultValue = "0")
+                                                                   Integer start,
+                                                           @RequestParam(name = "count", defaultValue = "10")
+                                                                   Integer count) {
         PageCounter page = CommonUtil.convertToPageParameter(start, count);
         Page<Order> paging = this.orderService.getByStatus(status, page.getPage(), page.getCount());
-        PagingDozer pagingDozer = new PagingDozer<>(paging, OrderSimplifyVO.class);
+        PagingDozer<Order, OrderSimplifyVO> pagingDozer = new PagingDozer<>(paging, OrderSimplifyVO.class);
         pagingDozer.getItems().forEach(o -> ((OrderSimplifyVO) o).setPeriod(this.payTimeLimit));
         return pagingDozer;
     }

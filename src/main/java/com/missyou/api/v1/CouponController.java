@@ -1,11 +1,3 @@
-/**
- * @作者 7七月
- * @微信公号 林间有风
- * @开源项目 $ http://7yue.pro
- * @免费专栏 $ http://course.7yue.pro
- * @我的课程 $ http://imooc.com/t/4294850
- * @创建时间 2019-08-05 04:25
- */
 package com.missyou.api.v1;
 
 import com.missyou.core.LocalUser;
@@ -93,9 +85,6 @@ public class CouponController {
         if (coupons.isEmpty()) {
             return Collections.emptyList();
         }
-        return coupons.stream().map(coupon -> {
-            CouponCategoryVO vo = new CouponCategoryVO(coupon);
-            return vo;
-        }).collect(Collectors.toList());
+        return coupons.stream().map(CouponCategoryVO::new).collect(Collectors.toList());
     }
 }

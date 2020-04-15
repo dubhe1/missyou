@@ -8,14 +8,14 @@ public enum CouponStatus {
     USED(2, "已使用"),
     EXPIRED(3, "未使用，已过期");
 
-    private Integer value;
+    private final Integer value;
 
     public Integer getValue() {
         return this.value;
     }
 
     CouponStatus(Integer value, String description) {
-        this.value =value;
+        this.value = value;
     }
 
     public static CouponStatus toType(int value) {

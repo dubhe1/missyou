@@ -1,11 +1,3 @@
-/**
- * @作者 7七月
- * @微信公号 林间有风
- * @开源项目 $ http://7yue.pro
- * @免费专栏 $ http://course.7yue.pro
- * @我的课程 $ http://imooc.com/t/4294850
- * @创建时间 2020-03-12 21:09
- */
 package com.missyou.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -54,13 +46,12 @@ public class WxAuthenticationService {
     }
 
     private String registerUser(Map<String, Object> session) {
-        String openid = (String)session.get("openid");
-        if (openid == null){
+        String openid = (String) session.get("openid");
+        if (openid == null) {
             throw new ParameterException(20004);
         }
         Optional<User> userOptional = this.userRepository.findByOpenid(openid);
-//        userOptional.ifPresentOrElse(Consummer, Runable)
-        if(userOptional.isPresent()){
+        if (userOptional.isPresent()) {
             // TODO:返回JWT令牌
             // 数字等级
             return JwtToken.makeToken(userOptional.get().getId());

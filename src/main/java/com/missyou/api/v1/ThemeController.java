@@ -25,7 +25,6 @@ public class ThemeController {
 
     @GetMapping("/by/names")
 
-//    @ScopeLevel(8)
     public List<ThemePureVO> getThemeGroupByNames(@RequestParam(name = "names") String names) {
         List<String> nameList = Arrays.asList(names.split(","));
         List<Theme> themes = themeService.findByNames(nameList);
@@ -38,12 +37,10 @@ public class ThemeController {
         return list;
     }
 
-    //VIP分组 16
-    //User分组 2
 
     @GetMapping("/name/{name}/with_spu")
-    public Theme getThemeByNameWithSpu(@PathVariable(name = "name") String themeName){
+    public Theme getThemeByNameWithSpu(@PathVariable(name = "name") String themeName) {
         Optional<Theme> optionalTheme = this.themeService.findByName(themeName);
-        return optionalTheme.orElseThrow(()-> new NotFoundException(30003));
+        return optionalTheme.orElseThrow(() -> new NotFoundException(30003));
     }
 }

@@ -1,11 +1,3 @@
-/**
- * @作者 7七月
- * @微信公号 林间有风
- * @开源项目 $ http://talelin.com
- * @免费专栏 $ http://course.talelin.com
- * @我的课程 $ http://imooc.com/t/4294850
- * @创建时间 2020-03-31 18:28
- */
 package com.missyou.api.v1;
 
 import com.missyou.core.interceptors.ScopeLevel;
@@ -40,9 +32,8 @@ public class PaymentController {
 
     @PostMapping("/pay/order/{id}")
     @ScopeLevel
-    public Map<String,String> preWxOrder(@PathVariable(name = "id") @Positive Long oid) {
-        Map<String, String> miniPayParams = this.wxPaymentService.preOrder(oid);
-        return miniPayParams;
+    public Map<String, String> preWxOrder(@PathVariable(name = "id") @Positive Long oid) {
+        return this.wxPaymentService.preOrder(oid);
     }
 
 
@@ -58,10 +49,9 @@ public class PaymentController {
         }
         String xml;
         xml = LinWxNotify.readNotify(s);
-        try{
+        try {
             this.wxPaymentNotifyService.processPayNotify(xml);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return LinWxNotify.fail();
         }
         return LinWxNotify.success();

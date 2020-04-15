@@ -18,5 +18,4 @@ public @interface PasswordEqual {
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-    //关联类 编程模式
 }
