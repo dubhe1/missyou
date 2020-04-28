@@ -5,18 +5,18 @@ management:
     httptrace:
       enabled: true
   server:
-    port: 8088
+    port: 8098
   endpoints:
     web:
       exposure:
         include: "*"
 server:
-  port: 8081
+  port: 8090
 
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/sleeve?characterEncoding=utf-8&serverTimezone=GMT%2B8
-    username: root
+    username:
     password:
   jpa:
     properties:
@@ -24,18 +24,22 @@ spring:
         show_sql: true
         format_sql: true
   redis:
-    localhost: localhost
     port: 6379
+    host: localhost
     database: 7
     password:
     listen-pattern: __keyevent@7__:expired
 
 missyou:
   security:
-    jwt-key: 888888888
+    jwt-key: imissyou
     token-expired-in: 86400000
   order:
     max-sku-limit: 777
     pay-time-limit: 3600
     pay-callback-host:
     pay-callback-path: /v1/payment/wx/notify
+wx:
+  appid:
+  appsecret:
+  code2session: https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code
